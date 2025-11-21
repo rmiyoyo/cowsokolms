@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class AdminController extends Controller
 {
-    //
+    public function index()
+    {
+        $courses = auth()->user()->courses()->with('lessons', 'enrollments')->get();
+        return view('admin.index', compact('courses'));
+    }
 }
