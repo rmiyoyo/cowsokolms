@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .lms-card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl;
+  }
+
+  .lms-btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300;
+  }
+
+  .lms-btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-all duration-200 border border-gray-200;
+  }
+
+  .lms-btn-danger {
+    @apply bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-300;
+  }
+
+  .lms-form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .lms-form-label {
+    @apply block text-sm font-semibold text-gray-700 mb-2;
+  }
+
+  .lms-header {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg;
+  }
+
+  .lms-nav-link {
+    @apply text-white hover:text-blue-100 px-4 py-2 rounded-md transition-colors duration-200 font-medium;
+  }
+
+  .lms-progress-bar {
+    @apply bg-blue-600 h-3 rounded-full transition-all duration-500;
+  }
+
+  .lms-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .lms-badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .lms-badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .lms-badge-danger {
+    @apply bg-red-100 text-red-800;
+  }
+}

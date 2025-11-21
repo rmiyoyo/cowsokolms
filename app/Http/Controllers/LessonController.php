@@ -10,6 +10,21 @@ use Illuminate\Support\Facades\Storage;
 
 class LessonController extends Controller
 {
+    public function show(Lesson $lesson)
+    {
+        $course = $lesson->course;
+        $enrolled = auth()->user()->enrolledCourses->contains($course->id);
+        
+        if (!$enrolled) {
+            return redirect()->route('courses.show', $course)
+                ->with('error', 'You must be enrolled to view lessons');
+        }
+        
+        $isCompleted = $lesson->isCompletedBy(auth()->id());
+        
+        return view('lessons.show', compact('lesson', 'course', 'isCompleted'));
+    }
+
     public function create(Course $course)
     {
         return view('admin.lessons.create', compact('course'));
@@ -81,5 +96,14 @@ class LessonController extends Controller
         ]);
 
         return back()->with('success', 'Lesson marked as complete');
+    }
+
+    public function uncomplete(Lesson $lesson)
+    {
+        LessonCompletion::where('user_id', auth()->id())
+            ->where('lesson_id', $lesson->id)
+            ->delete();
+
+        return back()->with('success', 'Lesson marked as incomplete');
     }
 }
