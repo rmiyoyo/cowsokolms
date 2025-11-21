@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuizQuestion extends Model
 {
-    //
+    protected $fillable = ['quiz_id', 'question', 'type', 'options', 'correct_answer'];
+    protected $casts = ['options' => 'array'];
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
 }
