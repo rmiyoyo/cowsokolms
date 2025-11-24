@@ -56,7 +56,7 @@ class QuizController extends Controller
             'questions' => 'required|array|min:1',
             'questions.*.question' => 'required',
             'questions.*.type' => 'required|in:mcq,true_false',
-            'questions.*.options' => 'required|array',
+            'questions.*.options' => 'required',
             'questions.*.correct_answer' => 'required'
         ]);
 
@@ -67,6 +67,10 @@ class QuizController extends Controller
         ]);
 
         foreach ($validated['questions'] as $q) {
+            if (is_string($q['options'])) {
+                $q['options'] = json_decode($q['options'], true);
+            }
+            
             $quiz->questions()->create($q);
         }
 
@@ -87,7 +91,7 @@ class QuizController extends Controller
             'questions' => 'required|array|min:1',
             'questions.*.question' => 'required',
             'questions.*.type' => 'required|in:mcq,true_false',
-            'questions.*.options' => 'required|array',
+            'questions.*.options' => 'required',
             'questions.*.correct_answer' => 'required'
         ]);
 
@@ -97,7 +101,12 @@ class QuizController extends Controller
         ]);
 
         $quiz->questions()->delete();
+        
         foreach ($validated['questions'] as $q) {
+            if (is_string($q['options'])) {
+                $q['options'] = json_decode($q['options'], true);
+            }
+            
             $quiz->questions()->create($q);
         }
 
@@ -108,7 +117,6 @@ class QuizController extends Controller
     {
         $course = $quiz->course;
         $quiz->delete();
-
         return redirect()->route('admin.courses.edit', $course)->with('success', 'Quiz deleted successfully');
     }
 }

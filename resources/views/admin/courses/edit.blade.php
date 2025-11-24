@@ -39,12 +39,14 @@
                         
                         <div class="mt-8 flex justify-between">
                             <button type="submit" class="lms-btn-primary">Save Changes</button>
-                            <form method="POST" action="{{ route('admin.courses.destroy', $course) }}" onsubmit="return confirm('Are you sure you want to delete this course?')" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="lms-btn-danger">Delete Course</button>
-                            </form>
+                            <button type="button" onclick="if(confirm('Are you sure you want to delete this course?')) document.getElementById('delete-course-form').submit()" class="lms-btn-danger">
+                                Delete Course
+                            </button>
                         </div>
+                    </form>
+                    <form id="delete-course-form" method="POST" action="{{ route('admin.courses.destroy', $course) }}" class="hidden">
+                        @csrf
+                        @method('DELETE')
                     </form>
                 </div>
                 
@@ -65,13 +67,15 @@
                                         </div>
                                         <div class="flex gap-3 text-xs">
                                             <a href="{{ route('admin.lessons.edit', $lesson) }}" class="text-blue-600 font-medium">Edit</a>
-                                            <form method="POST" action="{{ route('admin.lessons.destroy', $lesson) }}" onsubmit="return confirm('Delete this lesson?')" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 font-medium">Delete</button>
-                                            </form>
+                                            <button type="button" onclick="if(confirm('Delete this lesson?')) document.getElementById('delete-lesson-{{ $lesson->id }}').submit()" class="text-red-600 font-medium">
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
+                                    <form id="delete-lesson-{{ $lesson->id }}" method="POST" action="{{ route('admin.lessons.destroy', $lesson) }}" class="hidden">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 @endforeach
                             </div>
                         @else
@@ -93,13 +97,15 @@
                                         <div class="text-xs text-gray-500 mb-2">{{ $quiz->questions->count() }} questions</div>
                                         <div class="flex gap-3 text-xs">
                                             <a href="{{ route('admin.quizzes.edit', $quiz) }}" class="text-blue-600 font-medium">Edit</a>
-                                            <form method="POST" action="{{ route('admin.quizzes.destroy', $quiz) }}" onsubmit="return confirm('Delete this quiz?')" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 font-medium">Delete</button>
-                                            </form>
+                                            <button type="button" onclick="if(confirm('Delete this quiz?')) document.getElementById('delete-quiz-{{ $quiz->id }}').submit()" class="text-red-600 font-medium">
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
+                                    <form id="delete-quiz-{{ $quiz->id }}" method="POST" action="{{ route('admin.quizzes.destroy', $quiz) }}" class="hidden">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 @endforeach
                             </div>
                         @else
